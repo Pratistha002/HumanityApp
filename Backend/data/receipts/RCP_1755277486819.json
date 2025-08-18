@@ -1,0 +1,32 @@
+{
+  "receiptId": "RCP_1755277486819",
+  "paymentId": "PAY_1755277486814_6CB4AFD6",
+  "transactionDetails": {
+    "amount": 1000,
+    "currency": "INR",
+    "utr": "123456789012",
+    "paymentMethod": "UPI",
+    "paymentApp": "phonepe",
+    "status": "SUCCESS"
+  },
+  "donorDetails": {
+    "name": "Test Donor",
+    "upiId": "testdonor@upi"
+  },
+  "recipientDetails": {
+    "name": "Humanity Charity Platform",
+    "upiId": "pratisthasingh002003-1@okaxis"
+  },
+  "donationDetails": {
+    "storyId": "story_123",
+    "storyTitle": "Help Build School in Rural Area",
+    "purpose": "Charitable Donation"
+  },
+  "timestamps": {
+    "initiatedAt": "2025-08-15T17:04:46.814Z",
+    "completedAt": "2025-08-15T17:04:46.819Z",
+    "receiptGeneratedAt": "2025-08-15T17:04:46.819Z"
+  },
+  "receiptUrl": "/api/receipt/RCP_1755277486819",
+  "downloadUrl": "/api/receipt/RCP_1755277486819/download"
+}

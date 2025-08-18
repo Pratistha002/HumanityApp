@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Test</title>
+</head>
+<body>
+    <h1>Testing Payment Integration</h1>
+    <img src="/qr-code.jpg" alt="QR Code Test" style="width: 300px;">
+    <p>If you can see the QR code above, the payment integration is working!</p>
+    
+    <script>
+        fetch('/api/payment-config')
+            .then(response => response.json())
+            .then(data => {
+                document.body.innerHTML += `
+                    <h2>Payment Configuration:</h2>
+                    <p><strong>UPI ID:</strong> ${data.upiId}</p>
+                    <p><strong>Account Holder:</strong> ${data.accountHolderName}</p>
+                    <p><strong>Organization:</strong> ${data.organizationName}</p>
+                `;
+            });
+    </script>
+</body>
+</html>

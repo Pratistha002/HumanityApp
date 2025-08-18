@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Debug</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>🧪 Dashboard API Debug</h1>
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        async function testDashboardAPIs() {
+            const baseUrl = 'http://localhost:5000';
+            
+            try {
+                results.innerHTML += '<h2>Testing Dashboard APIs...</h2>';
+                
+                // Test 1: Stats
+                results.innerHTML += '<h3>📊 Testing /api/stats</h3>';
+                try {
+                    const statsResponse = await axios.get(`${baseUrl}/api/stats`);
+                    results.innerHTML += `<p>✅ Stats: ${JSON.stringify(statsResponse.data)}</p>`;
+                } catch (error) {
+                    results.innerHTML += `<p>❌ Stats Error: ${error.message}</p>`;
+                    console.error('Stats error:', error);
+                }
+                
+                // Test 2: Collaborations
+                results.innerHTML += '<h3>🤝 Testing /api/collaborations</h3>';
+                try {
+                    const collabResponse = await axios.get(`${baseUrl}/api/collaborations`);
+                    results.innerHTML += `<p>✅ Collaborations: Success (${collabResponse.data.data?.length || 0} items)</p>`;
+                } catch (error) {
+                    results.innerHTML += `<p>❌ Collaborations Error: ${error.message}</p>`;
+                    console.error('Collaborations error:', error);
+                }
+                
+                // Test 3: Posts
+                results.innerHTML += '<h3>📝 Testing /api/posts</h3>';
+                try {
+                    const postsResponse = await axios.get(`${baseUrl}/api/posts`);
+                    results.innerHTML += `<p>✅ Posts: Success (${postsResponse.data?.length || 0} items)</p>`;
+                } catch (error) {
+                    results.innerHTML += `<p>❌ Posts Error: ${error.message}</p>`;
+                    console.error('Posts error:', error);
+                }
+                
+                // Test all together (like Dashboard does)
+                results.innerHTML += '<h3>🔄 Testing Promise.all (like Dashboard)</h3>';
+                try {
+                    const [statsRes, collaborationsRes, postsRes] = await Promise.all([
+                        axios.get(`${baseUrl}/api/stats`),
+                        axios.get(`${baseUrl}/api/collaborations`),
+                        axios.get(`${baseUrl}/api/posts`)
+                    ]);
+                    
+                    results.innerHTML += '<p>✅ Promise.all: All APIs working together!</p>';
+                    results.innerHTML += `<p>Stats: ${JSON.stringify(statsRes.data)}</p>`;
+                    results.innerHTML += `<p>Collaborations: ${collaborationsRes.data.success ? 'Success' : 'Failed'}</p>`;
+                    results.innerHTML += `<p>Posts: ${postsRes.data.length} posts</p>`;
+                    
+                } catch (error) {
+                    results.innerHTML += `<p>❌ Promise.all Error: ${error.message}</p>`;
+                    results.innerHTML += `<p>Status: ${error.response?.status}</p>`;
+                    results.innerHTML += `<p>Response: ${JSON.stringify(error.response?.data)}</p>`;
+                    console.error('Promise.all error:', error);
+                }
+                
+            } catch (error) {
+                results.innerHTML += `<p>❌ General Error: ${error.message}</p>`;
+                console.error('General error:', error);
+            }
+        }
+        
+        // Run tests when page loads
+        window.onload = testDashboardAPIs;
+    </script>
+</body>
+</html>

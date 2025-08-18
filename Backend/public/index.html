@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humanity - Help Those in Need</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        /* Posts Grid */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .post-media {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .post-media img,
+        .post-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .urgency-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .urgency-high { background-color: #e74c3c; }
+        .urgency-medium { background-color: #f39c12; }
+        .urgency-low { background-color: #27ae60; }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .post-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .payment-options {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .payment-option {
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .payment-option:hover,
+        .payment-option.selected {
+            border-color: #667eea;
+            background-color: #f8f9ff;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <div class="nav-logo">🤝 Humanity</div>
+                <div class="nav-menu">
+                    <a class="nav-link" onclick="showSection('home')">Home</a>
+                    <a class="nav-link" onclick="showSection('post')">Share Story</a>
+                    <a class="nav-link" onclick="showSection('collaborate')">Collaborate</a>
+                    <a class="nav-link" onclick="showSection('dashboard')">Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>Help Those in Need</h1>
+                <p>Share stories, make donations, and collaborate to make a difference in people's lives.</p>
+                <div class="stats-bar">
+                    <div class="stat">
+                        <span class="stat-number" id="totalDonations">₹0</span>
+                        <span class="stat-label">Total Donations</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="totalPosts">0</span>
+                        <span class="stat-label">Stories Shared</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="totalCollaborations">0</span>
+                        <span class="stat-label">Collaborations</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Stories of Hope</h2>
+            <p>These are real stories of people who need our help. Every donation makes a difference.</p>
+            <div id="postsContainer" class="posts-grid">
+                <!-- Posts will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Post Form Section -->
+        <section id="post" class="section">
+            <div class="form-container">
+                <h2>Share a Story</h2>
+                <p>Help us spread awareness about people in need by sharing their stories with photos or videos.</p>
+                
+                <div id="postMessage"></div>
+
+                <form id="postForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">Story Title *</label>
+                        <input type="text" id="title" name="title" required placeholder="Brief title describing the situation">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description *</label>
+                        <textarea id="description" name="description" required placeholder="Detailed description of the situation and how people can help" rows="5"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location *</label>
+                        <input type="text" id="location" name="location" required placeholder="City, State or specific address">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactInfo">Contact Information</label>
+                        <input type="text" id="contactInfo" name="contactInfo" placeholder="Phone number or email for direct contact (optional)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="urgencyLevel">Urgency Level</label>
+                        <select id="urgencyLevel" name="urgencyLevel">
+                            <option value="low">Low - General support needed</option>
+                            <option value="medium" selected>Medium - Moderate urgency</option>
+                            <option value="high">High - Immediate help required</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="media">Photos/Videos</label>
+                        <input type="file" id="media" name="media" multiple accept="image/*,video/*">
+                        <small>Maximum 5 files, 10MB each</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Share Story</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Collaboration Section -->
+        <section id="collaborate" class="section">
+            <div class="form-container">
+                <h2>Collaborate With Us</h2>
+                <p>Join us in making a difference! Whether you're an organization, business, or individual, we welcome partnerships.</p>
+                
+                <div id="collaborateMessage"></div>
+
+                <form id="collaborateForm">
+                    <div class="form-group">
+                        <label for="organizationName">Organization/Individual Name *</label>
+                        <input type="text" id="organizationName" name="organizationName" required placeholder="Your organization or full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactPerson">Contact Person *</label>
+                        <input type="text" id="contactPerson" name="contactPerson" required placeholder="Primary contact person">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="contact@organization.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+1 (555) 123-4567">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="organizationType">Organization Type *</label>
+                        <select id="organizationType" name="organizationType" required>
+                            <option value="">Select organization type</option>
+                            <option value="NGO/Non-Profit">NGO/Non-Profit</option>
+                            <option value="Corporate/Business">Corporate/Business</option>
+                            <option value="Educational Institution">Educational Institution</option>
+                            <option value="Healthcare Organization">Healthcare Organization</option>
+                            <option value="Government Agency">Government Agency</option>
+                            <option value="Religious Organization">Religious Organization</option>
+                            <option value="Community Group">Community Group</option>
+                            <option value="Individual Volunteer">Individual Volunteer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="collaborationType">Type of Collaboration *</label>
+                        <select id="collaborationType" name="collaborationType" required>
+                            <option value="">Select collaboration type</option>
+                            <option value="Financial Support">Financial Support</option>
+                            <option value="Resource Donation">Resource Donation</option>
+                            <option value="Volunteer Services">Volunteer Services</option>
+                            <option value="Skill-based Support">Skill-based Support</option>
+                            <option value="Awareness Campaign">Awareness Campaign</option>
+                            <option value="Event Partnership">Event Partnership</option>
+                            <option value="Long-term Partnership">Long-term Partnership</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="collaborateDescription">Description *</label>
+                        <textarea id="collaborateDescription" name="description" required placeholder="Tell us about your organization and how you'd like to collaborate with us." rows="5"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit Collaboration Request</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section">
+            <div class="form-container">
+                <h2>📊 Charity Dashboard</h2>
+                <p>Overview of our impact and collaboration efforts</p>
+            </div>
+
+            <div id="dashboardContent">
+                <!-- Dashboard content will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Donate</h3>
+                <button class="modal-close" onclick="closePaymentModal()">×</button>
+            </div>
+            <div id="modalBody">
+                <!-- Payment content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Humanity. Making a difference together.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentPost = null;
+        let posts = [];
+        let stats = {};
+
+        // Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            if (sectionId === 'home') {
+                loadPosts();
+                loadStats();
+            } else if (sectionId === 'dashboard') {
+                loadDashboard();
+            }
+        }
+
+        // Load posts
+        async function loadPosts() {
+            try {
+                const response = await fetch('/api/posts');
+                posts = await response.json();
+                displayPosts();
+            } catch (error) {
+                console.error('Error loading posts:', error);
+            }
+        }
+
+        // Display posts
+        function displayPosts() {
+            const container = document.getElementById('postsContainer');
+            
+            if (posts.length === 0) {
+                container.innerHTML = '<div class="form-container"><h3>No Stories Yet</h3><p>Be the first to share a story and help someone in need!</p></div>';
+                return;
+            }
+
+            container.innerHTML = posts.map(post => `
+                <div class="post-card">
+                    ${post.media && post.media.length > 0 ? `
+                        <div class="post-media">
+                            ${post.media[0].mimetype.startsWith('image/') ? 
+                                `<img src="${post.media[0].path}" alt="Story media" onerror="this.style.display='none'">` :
+                                `<video src="${post.media[0].path}" controls onerror="this.style.display='none'"></video>`
+                            }
+                            <div class="urgency-badge urgency-${post.urgencyLevel}">
+                                ${post.urgencyLevel.toUpperCase()}
+                            </div>
+                        </div>
+                    ` : ''}
+                    <div class="post-content">
+                        <h3 class="post-title">${post.title}</h3>
+                        <p class="post-description">${post.description}</p>
+                        <div class="post-meta">
+                            <span>📍 ${post.location}</span>
+                            <span>📅 ${new Date(post.createdAt).toLocaleDateString()}</span>
+                        </div>
+                        ${post.contactInfo ? `<div class="post-meta"><span>📞 ${post.contactInfo}</span></div>` : ''}
+                        <div class="post-meta">
+                            <span>💰 ₹${(post.donationAmount || 0).toLocaleString()} raised</span>
+                            <span>👥 ${post.donations || 0} donors</span>
+                        </div>
+                        <button class="btn btn-success" onclick="openPaymentModal('${post.id}')">💝 Donate Now</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load stats
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                stats = await response.json();
+                document.getElementById('totalDonations').textContent = `₹${(stats.totalDonations || 0).toLocaleString()}`;
+                document.getElementById('totalPosts').textContent = stats.totalPosts || 0;
+                document.getElementById('totalCollaborations').textContent = stats.totalCollaborations || 0;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Post form submission
+        document.getElementById('postForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const messageDiv = document.getElementById('postMessage');
+            
+            try {
+                const response = await fetch('/api/posts', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    messageDiv.innerHTML = '<div class="alert alert-success">Story shared successfully!</div>';
+                    e.target.reset();
+                    loadPosts();
+                    loadStats();
+                } else {
+                    throw new Error('Failed to share story');
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="alert alert-error">Error sharing story. Please try again.</div>';
+            }
+        });
+
+        // Collaboration form submission
+        document.getElementById('collaborateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            const messageDiv = document.getElementById('collaborateMessage');
+            
+            try {
+                const response = await fetch('/api/collaborate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    messageDiv.innerHTML = '<div class="alert alert-success">Collaboration request submitted successfully! We will contact you soon.</div>';
+                    e.target.reset();
+                    loadStats();
+                } else {
+                    throw new Error('Failed to submit collaboration request');
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="alert alert-error">Error submitting request. Please try again.</div>';
+            }
+        });
+
+        let paymentConfig = {};
+
+        // Load payment configuration
+        async function loadPaymentConfig() {
+            try {
+                const response = await fetch('/api/payment-config');
+                paymentConfig = await response.json();
+            } catch (error) {
+                console.error('Error loading payment config:', error);
+                paymentConfig = {
+                    upiId: 'pratisthasingh002003-1@okaxis',
+                    organizationName: 'Humanity',
+                    accountHolderName: 'PRATISTHA SINGH'
+                };
+            }
+        }
+
+        // Payment modal
+        function openPaymentModal(postId) {
+            currentPost = posts.find(p => p.id === postId);
+            if (!currentPost) return;
+            
+            document.getElementById('modalTitle').textContent = `Donate to: ${currentPost.title}`;
+            document.getElementById('modalBody').innerHTML = `
+                <div>
+                    <h4>Choose Donation Amount</h4>
+                    <div class="payment-options">
+                        <div class="payment-option" onclick="selectAmount(100)">₹100</div>
+                        <div class="payment-option" onclick="selectAmount(500)">₹500</div>
+                        <div class="payment-option" onclick="selectAmount(1000)">₹1,000</div>
+                        <div class="payment-option" onclick="selectAmount(2000)">₹2,000</div>
+                        <div class="payment-option" onclick="selectAmount(5000)">₹5,000</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Custom Amount (₹)</label>
+                        <input type="number" id="customAmount" placeholder="Enter amount" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Name (Optional)</label>
+                        <input type="text" id="donorName" placeholder="Anonymous">
+                    </div>
+
+                    <h4>Choose Payment Method</h4>
+                    <div class="payment-options">
+                        <div class="payment-option" onclick="selectPaymentMethod('upi')">
+                            <strong>UPI / QR Code</strong><br>
+                            <small>Pay using any UPI app</small>
+                        </div>
+                        <div class="payment-option" onclick="selectPaymentMethod('bank')">
+                            <strong>Bank Transfer</strong><br>
+                            <small>Direct bank account transfer</small>
+                        </div>
+                        <div class="payment-option" onclick="selectPaymentMethod('paypal')">
+                            <strong>PayPal</strong><br>
+                            <small>International payments</small>
+                        </div>
+                    </div>
+
+                    <div id="paymentDetails"></div>
+
+                    <button class="btn btn-success" onclick="processDonation()" id="donateBtn" disabled>
+                        Confirm Donation
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+            currentPost = null;
+        }
+
+        let selectedAmount = 0;
+        let selectedPaymentMethod = '';
+
+        function selectAmount(amount) {
+            selectedAmount = amount;
+            document.getElementById('customAmount').value = amount;
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            updateDonateButton();
+        }
+
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            const detailsDiv = document.getElementById('paymentDetails');
+            
+            if (method === 'upi') {
+                detailsDiv.innerHTML = `
+                    <div style="text-align: center; margin: 1rem 0;">
+                        <h4>Scan QR Code to Pay</h4>
+                        <div style="margin: 1rem auto; display: flex; flex-direction: column; align-items: center;">
+                            <img src="/qr-code.jpg" alt="UPI QR Code" style="width: 250px; height: 250px; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 1rem;">
+                            <div style="background-color: #f8f9fa; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                                <p><strong>Account Holder:</strong> ${paymentConfig.accountHolderName || 'PRATISTHA SINGH'}</p>
+                                <p><strong>UPI ID:</strong> ${paymentConfig.upiId || 'pratisthasingh002003-1@okaxis'}</p>
+                                <p><strong>Amount:</strong> ₹${selectedAmount || 'Enter amount'}</p>
+                                <p style="color: #666; font-size: 0.9rem; margin-top: 0.5rem;">
+                                    Scan the QR code with any UPI app (Google Pay, PhonePe, Paytm, etc.)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (method === 'bank') {
+                detailsDiv.innerHTML = `
+                    <div style="background-color: #f8f9fa; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                        <h4>Bank Transfer Details</h4>
+                        <p><strong>Account Name:</strong> ${paymentConfig.accountHolderName || 'PRATISTHA SINGH'}</p>
+                        <p><strong>UPI ID:</strong> ${paymentConfig.upiId || 'pratisthasingh002003-1@okaxis'}</p>
+                        <p><strong>Bank:</strong> Axis Bank</p>
+                        <p><strong>Amount:</strong> ₹${selectedAmount || 'Enter amount'}</p>
+                        <p style="color: #666; font-size: 0.9rem; margin-top: 1rem;">
+                            For direct bank transfer, please use the UPI ID above or contact us for detailed bank account information.
+                        </p>
+                        <p style="color: #666; font-size: 0.9rem;">
+                            Please mention the story title and your name as reference when making the transfer.
+                        </p>
+                    </div>
+                `;
+            } else if (method === 'paypal') {
+                detailsDiv.innerHTML = `
+                    <div style="background-color: #f8f9fa; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                        <h4>International Payment</h4>
+                        <p><strong>Recipient:</strong> ${paymentConfig.accountHolderName || 'PRATISTHA SINGH'}</p>
+                        <p><strong>Amount:</strong> ₹${selectedAmount || 'Enter amount'}</p>
+                        <p style="color: #666; font-size: 0.9rem; margin-top: 1rem;">
+                            For international donations, please contact us directly for payment options.
+                        </p>
+                        <p style="color: #666; font-size: 0.9rem;">
+                            We can provide PayPal, Wise, or other international transfer details upon request.
+                        </p>
+                        <p style="color: #666; font-size: 0.9rem;">
+                            Please mention the story title and your name as reference.
+                        </p>
+                    </div>
+                `;
+            }
+            
+            updateDonateButton();
+        }
+
+        function updateDonateButton() {
+            const customAmount = document.getElementById('customAmount').value;
+            selectedAmount = customAmount || selectedAmount;
+            
+            const btn = document.getElementById('donateBtn');
+            btn.disabled = !selectedAmount || !selectedPaymentMethod || selectedAmount <= 0;
+        }
+
+        // Listen for custom amount changes
+        document.addEventListener('input', (e) => {
+            if (e.target.id === 'customAmount') {
+                selectedAmount = e.target.value;
+                updateDonateButton();
+                
+                // Update payment details if method is selected
+                if (selectedPaymentMethod) {
+                    selectPaymentMethod(selectedPaymentMethod);
+                }
+            }
+        });
+
+        async function processDonation() {
+            if (!selectedAmount || !selectedPaymentMethod || !currentPost) return;
+            
+            const donorName = document.getElementById('donorName').value || 'Anonymous';
+            
+            try {
+                const response = await fetch(`/api/donate/${currentPost.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        amount: parseFloat(selectedAmount),
+                        donorName,
+                        paymentMethod: selectedPaymentMethod
+                    })
+                });
+                
+                if (response.ok) {
+                    alert('Thank you for your donation! Your contribution has been recorded.');
+                    closePaymentModal();
+                    loadPosts();
+                    loadStats();
+                } else {
+                    throw new Error('Failed to process donation');
+                }
+            } catch (error) {
+                alert('Error processing donation. Please try again.');
+            }
+        }
+
+        // Load dashboard
+        async function loadDashboard() {
+            try {
+                const [statsRes, collaborationsRes] = await Promise.all([
+                    fetch('/api/stats'),
+                    fetch('/api/collaborations')
+                ]);
+                
+                const stats = await statsRes.json();
+                const collaborations = await collaborationsRes.json();
+                
+                document.getElementById('dashboardContent').innerHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                        <div class="form-container">
+                            <h3>💰 Financial Impact</h3>
+                            <div style="text-align: center; padding: 1rem 0;">
+                                <div style="font-size: 2.5rem; font-weight: bold; color: #667eea;">₹${(stats.totalDonations || 0).toLocaleString()}</div>
+                                <div style="font-size: 0.9rem; color: #666;">Total Donations Raised</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-container">
+                            <h3>📖 Stories & Reach</h3>
+                            <div style="text-align: center; padding: 1rem 0;">
+                                <div style="font-size: 2.5rem; font-weight: bold; color: #667eea;">${stats.totalPosts || 0}</div>
+                                <div style="font-size: 0.9rem; color: #666;">Stories Shared</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-container">
+                            <h3>🤝 Collaborations</h3>
+                            <div style="text-align: center; padding: 1rem 0;">
+                                <div style="font-size: 2.5rem; font-weight: bold; color: #667eea;">${stats.totalCollaborations || 0}</div>
+                                <div style="font-size: 0.9rem; color: #666;">Partnership Requests</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${stats.recentDonations && stats.recentDonations.length > 0 ? `
+                        <div class="form-container" style="margin-top: 2rem;">
+                            <h3>💝 Recent Donations</h3>
+                            ${stats.recentDonations.map(donation => `
+                                <div style="padding: 1rem; border: 1px solid #e1e5e9; border-radius: 5px; margin-bottom: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h4>${donation.donorName}</h4>
+                                            <p>₹${donation.amount.toLocaleString()} via ${donation.paymentMethod.toUpperCase()}</p>
+                                            <p style="font-size: 0.8rem; color: #888;">${new Date(donation.timestamp).toLocaleString()}</p>
+                                        </div>
+                                        <div style="padding: 0.25rem 0.5rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold; background-color: #d4edda; color: #155724;">
+                                            Completed
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                    
+                    ${collaborations.length > 0 ? `
+                        <div class="form-container" style="margin-top: 2rem;">
+                            <h3>🤝 Collaboration Requests</h3>
+                            ${collaborations.map(collab => `
+                                <div style="padding: 1rem; border: 1px solid #e1e5e9; border-radius: 5px; margin-bottom: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                        <div style="flex: 1;">
+                                            <h4>${collab.organizationName}</h4>
+                                            <p><strong>Contact:</strong> ${collab.contactPerson}</p>
+                                            <p><strong>Type:</strong> ${collab.organizationType}</p>
+                                            <p><strong>Collaboration:</strong> ${collab.collaborationType}</p>
+                                            <p><strong>Email:</strong> ${collab.email}</p>
+                                            <p><strong>Phone:</strong> ${collab.phone}</p>
+                                            <p style="margin-top: 0.5rem;">${collab.description}</p>
+                                            <p style="font-size: 0.8rem; color: #888; margin-top: 0.5rem;">
+                                                Submitted: ${new Date(collab.submittedAt).toLocaleString()}
+                                            </p>
+                                        </div>
+                                        <div style="padding: 0.25rem 0.5rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold; background-color: #fff3cd; color: #856404;">
+                                            ${collab.status.toUpperCase()}
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                `;
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPaymentConfig();
+            loadPosts();
+            loadStats();
+        });
+    </script>
+</body>
+</html>

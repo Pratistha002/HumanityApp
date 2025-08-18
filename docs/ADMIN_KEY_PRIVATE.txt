@@ -1,0 +1,30 @@
+🔐 CONFIDENTIAL - ADMIN ACCESS CREDENTIALS
+=============================================
+
+⚠️  KEEP THIS FILE SECURE AND PRIVATE ⚠️
+
+Admin Key: Pratistha@123
+Admin URL: http://localhost:3000/admin
+
+🔒 SECURITY NOTES:
+- This key grants access to all collaboration partner contact details
+- Never share this key with unauthorized personnel
+- Delete this file after memorizing the key for maximum security
+- The key is not displayed anywhere in the application interface
+
+✅ WHAT THIS KEY PROVIDES ACCESS TO:
+- Full email addresses of collaboration partners
+- Phone numbers of all contacts
+- Organization details and collaboration requests
+- Status management and admin notes
+- Data export functionality
+- Analytics and statistics
+
+🚨 IMPORTANT:
+- Keep this information confidential
+- Only you should know this admin key
+- The application interface will not show the key for security
+- Consider deleting this file once you've memorized the key
+
+=============================================
+🔐 FOR YOUR EYES ONLY - KEEP SECURE 🔐

@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humanity - Interactive Charity Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .main-container {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        /* Content Sections */
+        .section {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: slideIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .section-quote {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            margin: 1rem auto;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .section-quote i {
+            color: #667eea;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-quote p {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #333;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .section-quote span {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Stories Grid */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .story-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .story-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .story-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .story-meta {
+            font-size: 0.9rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .story-content {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        /* Forms */
+        .form-container {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideInUp 0.3s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .payment-method {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .payment-method:hover, .payment-method.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateY(-2px);
+        }
+
+        .payment-method i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #667eea;
+        }
+
+        .amount-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .amount-btn {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .amount-btn:hover, .amount-btn.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        /* QR Code Display */
+        .qr-display {
+            text-align: center;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+            margin: 1rem 0;
+        }
+
+        .qr-display img {
+            max-width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success/Error Messages */
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .amount-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                display: flex;
+            }
+        }
+
+        /* Confetti animation */
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Pulse effect for donate buttons */
+        .btn-primary:hover {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+
+        /* Hero Quote Styles */
+        .hero-quote {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .quote-icon {
+            font-size: 2rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .quote-author {
+            font-size: 1rem;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        /* Purpose Section */
+        .purpose-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .purpose-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .purpose-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .purpose-card:hover::before {
+            left: 100%;
+        }
+
+        .purpose-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .purpose-icon {
+            font-size: 3rem;
+            color: #FFD700;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .purpose-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .purpose-card p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            text-align: center;
+            margin: 4rem 0;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            min-width: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-large::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        .btn-large:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* Enhanced Stats Cards */
+        .stat-card {
+            position: relative;
+        }
+
+        .stat-description {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Quotes Carousel */
+        .quotes-carousel {
+            margin-top: 4rem;
+            position: relative;
+            height: 150px;
+            overflow: hidden;
+            animation: fadeInUp 1s ease 1s both;
+        }
+
+        .quote-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .quote-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quote-slide i {
+            font-size: 1.5rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+
+        .quote-slide p {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .quote-slide span {
+            font-size: 1rem;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        /* Gradient Text Effect */
+        .gradient-text {
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF6B6B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Floating Hearts Animation */
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 215, 0, 0.6);
+            font-size: 1.5rem;
+            animation: floatHeart 8s infinite linear;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Missing Animation Keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive Design for New Elements */
+        @media (max-width: 768px) {
+            .purpose-section {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .purpose-card {
+                padding: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-large {
+                min-width: 250px;
+            }
+            
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+            
+            .hero-quote {
+                padding: 1.5rem;
+            }
+            
+            .quote-text {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-heart"></i>
+                Humanity
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a class="nav-link active" onclick="showSection('home')">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a class="nav-link" onclick="showSection('stories')">
+                    <i class="fas fa-book-open"></i> Stories
+                </a>
+                <a class="nav-link" onclick="showSection('share')">
+                    <i class="fas fa-plus-circle"></i> Share Story
+                </a>
+                <a class="nav-link" onclick="showSection('collaborate')">
+                    <i class="fas fa-handshake"></i> Collaborate
+                </a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="container">
+            <!-- Home Section -->
+            <div id="home" class="section active">
+                <div class="hero">
+                    <div class="hero-quote">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p class="quote-text">"The best way to find yourself is to lose yourself in the service of others."</p>
+                        <p class="quote-author">- Mahatma Gandhi</p>
+                    </div>
+                    
+                    <h1>Making a Difference Together</h1>
+                    <p class="hero-subtitle">Connect hearts, share stories, and create positive change in our community</p>
+                    
+                    <!-- Purpose Section -->
+                    <div class="purpose-section">
+                        <div class="purpose-card">
+                            <i class="fas fa-heart purpose-icon"></i>
+                            <h3>Our Purpose</h3>
+                            <p>Humanity bridges the gap between those who need help and those who want to help. Every story shared is a life that can be transformed through collective compassion.</p>
+                        </div>
+                        <div class="purpose-card">
+                            <i class="fas fa-hands-helping purpose-icon"></i>
+                            <h3>How We Help</h3>
+                            <p>We provide a transparent platform where real stories meet real solutions. 100% of donations go directly to those in need through secure UPI payments.</p>
+                        </div>
+                        <div class="purpose-card">
+                            <i class="fas fa-globe purpose-icon"></i>
+                            <h3>Our Impact</h3>
+                            <p>From medical emergencies to education support, from disaster relief to poverty alleviation - together we're creating ripples of positive change across communities.</p>
+                        </div>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <div class="cta-section">
+                        <h2>Ready to Make a Difference?</h2>
+                        <div class="cta-buttons">
+                            <button class="btn btn-primary btn-large" onclick="showSection('stories')">
+                                <i class="fas fa-heart"></i> Donate Now
+                            </button>
+                            <button class="btn btn-secondary btn-large" onclick="showSection('share')">
+                                <i class="fas fa-plus-circle"></i> Share Your Story
+                            </button>
+                        </div>
+                        <p class="cta-subtitle">Join thousands of compassionate souls making the world a better place</p>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-number" id="totalDonations">₹0</span>
+                            <div class="stat-label">Total Donations</div>
+                            <div class="stat-description">Direct impact on lives</div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="totalStories">0</span>
+                            <div class="stat-label">Stories Shared</div>
+                            <div class="stat-description">Voices heard & helped</div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="totalCollaborations">0</span>
+                            <div class="stat-label">Collaborations</div>
+                            <div class="stat-description">Partners in change</div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="helpedPeople">0</span>
+                            <div class="stat-label">Lives Touched</div>
+                            <div class="stat-description">Dreams made possible</div>
+                        </div>
+                    </div>
+
+                    <!-- Inspiring Quotes Carousel -->
+                    <div class="quotes-carousel">
+                        <div class="quote-slide active">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"No one has ever become poor by giving."</p>
+                            <span>- Anne Frank</span>
+                        </div>
+                        <div class="quote-slide">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"We make a living by what we get, but we make a life by what we give."</p>
+                            <span>- Winston Churchill</span>
+                        </div>
+                        <div class="quote-slide">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"The meaning of life is to find your gift. The purpose of life is to give it away."</p>
+                            <span>- Pablo Picasso</span>
+                        </div>
+                        <div class="quote-slide">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"Kindness is a language which the deaf can hear and the blind can see."</p>
+                            <span>- Mark Twain</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stories Section -->
+            <div id="stories" class="section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-book-open"></i>
+                        Stories That Need Your Help
+                    </h2>
+                    <div class="section-quote">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"The purpose of human life is to serve, and to show compassion and the will to help others."</p>
+                        <span>- Albert Schweitzer</span>
+                    </div>
+                </div>
+                <div class="stories-grid" id="storiesGrid">
+                    <!-- Stories will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Share Story Section -->
+            <div id="share" class="section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Share Your Story
+                    </h2>
+                    <div class="section-quote">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"Your story could be the key that unlocks someone else's prison of despair."</p>
+                        <span>- Unknown</span>
+                    </div>
+                </div>
+                <div class="form-container">
+                    <form id="storyForm">
+                        <div class="form-group">
+                            <label class="form-label">Story Title *</label>
+                            <input type="text" class="form-input" name="title" required placeholder="Give your story a meaningful title">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Your Story *</label>
+                            <textarea class="form-textarea" name="content" required placeholder="Share your story, what help you need, and how donations will be used..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contact Information *</label>
+                            <input type="text" class="form-input" name="contact" required placeholder="Phone number or email for verification">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Location</label>
+                            <input type="text" class="form-input" name="location" placeholder="City, State">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" name="category">
+                                <option value="medical">Medical Emergency</option>
+                                <option value="education">Education Support</option>
+                                <option value="disaster">Disaster Relief</option>
+                                <option value="poverty">Poverty Alleviation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Share Story
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Collaborate Section -->
+            <div id="collaborate" class="section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-handshake"></i>
+                        Collaborate With Us
+                    </h2>
+                    <div class="section-quote">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"Alone we can do so little; together we can do so much."</p>
+                        <span>- Helen Keller</span>
+                    </div>
+                </div>
+                <div class="form-container">
+                    <form id="collaborateForm">
+                        <div class="form-group">
+                            <label class="form-label">Organization/Individual Name *</label>
+                            <input type="text" class="form-input" name="name" required placeholder="Your name or organization name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email *</label>
+                            <input type="email" class="form-input" name="email" required placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" name="phone" placeholder="+91 XXXXX XXXXX">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">How would you like to collaborate? *</label>
+                            <textarea class="form-textarea" name="collaboration" required placeholder="Describe how you'd like to help - funding, volunteering, resources, partnerships, etc."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Your Background</label>
+                            <textarea class="form-textarea" name="background" placeholder="Tell us about yourself or your organization"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-handshake"></i>
+                            Submit Collaboration Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Modal -->
+    <div id="donationModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDonationModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 id="modalTitle">Make a Donation</h3>
+            <div id="modalContent">
+                <!-- Modal content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Include additional JavaScript files -->
+    <script src="/js/animations.js"></script>
+    <script src="/js/notifications.js"></script>
+
+    <script>
+        // Global variables
+        let currentStory = null;
+        let paymentConfig = {};
+        let selectedAmount = 0;
+        let selectedPaymentMethod = '';
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPaymentConfig();
+            loadStories();
+            loadStats();
+            setupEventListeners();
+            initializeQuotesCarousel();
+            createFloatingHearts();
+        });
+
+        // Load payment configuration
+        async function loadPaymentConfig() {
+            try {
+                const response = await fetch('/api/payment-config');
+                paymentConfig = await response.json();
+            } catch (error) {
+                console.error('Error loading payment config:', error);
+                paymentConfig = {
+                    upiId: 'pratisthasingh002003-1@okaxis',
+                    organizationName: 'Humanity - Charity Platform',
+                    accountHolderName: 'PRATISTHA SINGH'
+                };
+            }
+        }
+
+        // Load stories
+        async function loadStories() {
+            try {
+                const response = await fetch('/api/posts');
+                const stories = await response.json();
+                displayStories(stories);
+            } catch (error) {
+                console.error('Error loading stories:', error);
+                document.getElementById('storiesGrid').innerHTML = '<p>Error loading stories. Please try again later.</p>';
+            }
+        }
+
+        // Display stories
+        function displayStories(stories) {
+            const grid = document.getElementById('storiesGrid');
+            
+            if (stories.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <i class="fas fa-heart" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                        <h3>No stories yet</h3>
+                        <p>Be the first to share a story that needs help!</p>
+                        <button class="btn btn-primary" onclick="showSection('share')" style="margin-top: 1rem;">
+                            <i class="fas fa-plus"></i> Share First Story
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = stories.map(story => `
+                <div class="story-card">
+                    <div class="story-header">
+                        <div>
+                            <h3 class="story-title">${story.title}</h3>
+                            <div class="story-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> ${story.location || 'Location not specified'}</span>
+                                <span><i class="fas fa-tag"></i> ${story.category || 'General'}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="story-content">
+                        ${story.content.length > 150 ? story.content.substring(0, 150) + '...' : story.content}
+                    </div>
+                    <div class="story-actions">
+                        <button class="btn btn-primary" onclick="openDonationModal(${story.id})">
+                            <i class="fas fa-heart"></i> Donate Now
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewFullStory(${story.id})">
+                            <i class="fas fa-eye"></i> Read More
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load statistics
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const stats = await response.json();
+                
+                // Animate numbers
+                animateNumber('totalDonations', 0, stats.totalDonations, '₹');
+                animateNumber('totalStories', 0, stats.totalPosts);
+                animateNumber('totalCollaborations', 0, stats.totalCollaborations);
+                animateNumber('helpedPeople', 0, stats.totalPosts * 3); // Estimate
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Animate numbers
+        function animateNumber(elementId, start, end, prefix = '') {
+            const element = document.getElementById(elementId);
+            const duration = 2000;
+            const increment = (end - start) / (duration / 16);
+            let current = start;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= end) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                element.textContent = prefix + Math.floor(current).toLocaleString();
+            }, 16);
+        }
+
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Open donation modal
+        function openDonationModal(storyId) {
+            // Find the story
+            fetch('/api/posts')
+                .then(response => response.json())
+                .then(stories => {
+                    currentStory = stories.find(s => s.id === storyId);
+                    if (!currentStory) return;
+
+                    document.getElementById('modalTitle').textContent = `Donate to: ${currentStory.title}`;
+                    document.getElementById('modalContent').innerHTML = `
+                        <div style="margin-bottom: 2rem;">
+                            <h4>Choose Donation Amount</h4>
+                            <div class="amount-buttons">
+                                <button class="amount-btn" onclick="selectAmount(100)">₹100</button>
+                                <button class="amount-btn" onclick="selectAmount(500)">₹500</button>
+                                <button class="amount-btn" onclick="selectAmount(1000)">₹1000</button>
+                                <button class="amount-btn" onclick="selectAmount(2000)">₹2000</button>
+                                <button class="amount-btn" onclick="selectAmount(5000)">₹5000</button>
+                                <button class="amount-btn" onclick="selectAmount(0)">Custom</button>
+                            </div>
+                            <div style="margin-top: 1rem;">
+                                <input type="number" id="customAmount" class="form-input" placeholder="Enter custom amount" 
+                                       onchange="selectAmount(this.value)" style="display: none;">
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 2rem;">
+                            <h4>Choose Payment Method</h4>
+                            <div class="payment-methods">
+                                <div class="payment-method" onclick="selectPaymentMethod('upi')">
+                                    <i class="fab fa-google-pay"></i>
+                                    <div>UPI/QR</div>
+                                </div>
+                                <div class="payment-method" onclick="selectPaymentMethod('bank')">
+                                    <i class="fas fa-university"></i>
+                                    <div>Bank Transfer</div>
+                                </div>
+                                <div class="payment-method" onclick="selectPaymentMethod('international')">
+                                    <i class="fas fa-globe"></i>
+                                    <div>International</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="paymentDetails" style="display: none;">
+                            <!-- Payment details will be shown here -->
+                        </div>
+
+                        <div style="text-align: center; margin-top: 2rem;">
+                            <button class="btn btn-primary" onclick="processDonation()" id="donateBtn" disabled>
+                                <i class="fas fa-heart"></i> Confirm Donation
+                            </button>
+                        </div>
+                    `;
+
+                    document.getElementById('donationModal').classList.add('active');
+                });
+        }
+
+        // Select amount
+        function selectAmount(amount) {
+            selectedAmount = parseInt(amount);
+            
+            // Update UI
+            document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('selected'));
+            
+            if (amount === 0) {
+                document.getElementById('customAmount').style.display = 'block';
+                document.getElementById('customAmount').focus();
+                event.target.classList.add('selected');
+            } else {
+                document.getElementById('customAmount').style.display = 'none';
+                event.target.classList.add('selected');
+            }
+            
+            updateDonateButton();
+        }
+
+        // Select payment method
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Update UI
+            document.querySelectorAll('.payment-method').forEach(pm => pm.classList.remove('selected'));
+            event.target.classList.add('selected');
+            
+            // Show payment details
+            showPaymentDetails(method);
+            updateDonateButton();
+        }
+
+        // Show payment details
+        function showPaymentDetails(method) {
+            const detailsDiv = document.getElementById('paymentDetails');
+            detailsDiv.style.display = 'block';
+            
+            if (method === 'upi') {
+                detailsDiv.innerHTML = `
+                    <div class="qr-display">
+                        <h4>Scan QR Code to Pay</h4>
+                        <img src="/qr-code.jpg" alt="UPI QR Code" style="max-width: 200px;">
+                        <div style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 10px;">
+                            <p><strong>Account Holder:</strong> ${paymentConfig.accountHolderName}</p>
+                            <p><strong>UPI ID:</strong> ${paymentConfig.upiId}</p>
+                            <p><strong>Amount:</strong> ₹${selectedAmount || 'Select amount'}</p>
+                            <p style="color: #666; font-size: 0.9rem; margin-top: 1rem;">
+                                Scan with any UPI app (Google Pay, PhonePe, Paytm, etc.)
+                            </p>
+                        </div>
+                    </div>
+                `;
+            } else if (method === 'bank') {
+                detailsDiv.innerHTML = `
+                    <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px;">
+                        <h4>Bank Transfer Details</h4>
+                        <p><strong>Account Holder:</strong> ${paymentConfig.accountHolderName}</p>
+                        <p><strong>UPI ID:</strong> ${paymentConfig.upiId}</p>
+                        <p><strong>Bank:</strong> Axis Bank</p>
+                        <p><strong>Amount:</strong> ₹${selectedAmount || 'Select amount'}</p>
+                        <p style="color: #666; font-size: 0.9rem; margin-top: 1rem;">
+                            Use the UPI ID for direct bank transfer or contact us for detailed account information.
+                        </p>
+                    </div>
+                `;
+            } else if (method === 'international') {
+                detailsDiv.innerHTML = `
+                    <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px;">
+                        <h4>International Payment</h4>
+                        <p><strong>Recipient:</strong> ${paymentConfig.accountHolderName}</p>
+                        <p><strong>Amount:</strong> ₹${selectedAmount || 'Select amount'}</p>
+                        <p style="color: #666; font-size: 0.9rem; margin-top: 1rem;">
+                            For international donations, please contact us for PayPal, Wise, or other transfer options.
+                        </p>
+                        <p style="color: #666; font-size: 0.9rem;">
+                            Email: pratisthasingh002003@gmail.com
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        // Update donate button
+        function updateDonateButton() {
+            const btn = document.getElementById('donateBtn');
+            if (selectedAmount > 0 && selectedPaymentMethod) {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fas fa-heart"></i> Donate ₹${selectedAmount}`;
+            } else {
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fas fa-heart"></i> Confirm Donation`;
+            }
+        }
+
+        // Process donation
+        async function processDonation() {
+            if (!selectedAmount || !selectedPaymentMethod) {
+                alert('Please select amount and payment method');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/donations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        postId: currentStory.id,
+                        amount: selectedAmount,
+                        paymentMethod: selectedPaymentMethod,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+
+                if (response.ok) {
+                    // Trigger donation event for notification
+                    document.dispatchEvent(new CustomEvent('donationComplete', {
+                        detail: { amount: selectedAmount, storyTitle: currentStory.title }
+                    }));
+                    
+                    closeDonationModal();
+                    loadStats(); // Refresh stats
+                    
+                    // Add enhanced celebration effect
+                    createEnhancedCelebration();
+                } else {
+                    throw new Error('Failed to process donation');
+                }
+            } catch (error) {
+                console.error('Error processing donation:', error);
+                showAlert('error', 'Error processing donation. Please try again.');
+            }
+        }
+
+        // Close donation modal
+        function closeDonationModal() {
+            document.getElementById('donationModal').classList.remove('active');
+            selectedAmount = 0;
+            selectedPaymentMethod = '';
+            currentStory = null;
+        }
+
+        // View full story
+        function viewFullStory(storyId) {
+            fetch('/api/posts')
+                .then(response => response.json())
+                .then(stories => {
+                    const story = stories.find(s => s.id === storyId);
+                    if (!story) return;
+
+                    document.getElementById('modalTitle').textContent = story.title;
+                    document.getElementById('modalContent').innerHTML = `
+                        <div style="line-height: 1.6;">
+                            <div style="margin-bottom: 1rem; color: #666;">
+                                <i class="fas fa-map-marker-alt"></i> ${story.location || 'Location not specified'} | 
+                                <i class="fas fa-tag"></i> ${story.category || 'General'}
+                            </div>
+                            <div style="margin-bottom: 2rem;">
+                                ${story.content.replace(/\n/g, '<br>')}
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="btn btn-primary" onclick="closeDonationModal(); openDonationModal(${story.id})">
+                                    <i class="fas fa-heart"></i> Donate to This Story
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('donationModal').classList.add('active');
+                });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Story form submission
+            document.getElementById('storyForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const storyData = Object.fromEntries(formData);
+                
+                try {
+                    const response = await fetch('/api/posts', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(storyData)
+                    });
+
+                    if (response.ok) {
+                        // Trigger story submission event
+                        document.dispatchEvent(new CustomEvent('storySubmitted'));
+                        
+                        this.reset();
+                        loadStories(); // Refresh stories
+                        loadStats(); // Refresh stats
+                    } else {
+                        throw new Error('Failed to submit story');
+                    }
+                } catch (error) {
+                    console.error('Error submitting story:', error);
+                    showAlert('error', 'Error submitting story. Please try again.');
+                }
+            });
+
+            // Collaboration form submission
+            document.getElementById('collaborateForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const collaborationData = Object.fromEntries(formData);
+                
+                try {
+                    const response = await fetch('/api/collaborations', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(collaborationData)
+                    });
+
+                    if (response.ok) {
+                        // Trigger collaboration submission event
+                        document.dispatchEvent(new CustomEvent('collaborationSubmitted'));
+                        
+                        this.reset();
+                        loadStats(); // Refresh stats
+                    } else {
+                        throw new Error('Failed to submit collaboration request');
+                    }
+                } catch (error) {
+                    console.error('Error submitting collaboration:', error);
+                    showAlert('error', 'Error submitting collaboration request. Please try again.');
+                }
+            });
+
+            // Close modal when clicking outside
+            document.getElementById('donationModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeDonationModal();
+                }
+            });
+        }
+
+        // Celebration effect
+        function createCelebrationEffect() {
+            // Create confetti effect
+            for (let i = 0; i < 50; i++) {
+                createConfetti();
+            }
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.cssText = `
+                position: fixed;
+                width: 10px;
+                height: 10px;
+                background: ${['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7'][Math.floor(Math.random() * 5)]};
+                top: -10px;
+                left: ${Math.random() * 100}vw;
+                z-index: 10000;
+                border-radius: 50%;
+                pointer-events: none;
+                animation: confetti-fall ${Math.random() * 2 + 2}s linear forwards;
+            `;
+            
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, 4000);
+        }
+
+        // Show alert messages (keeping for backward compatibility)
+        function showAlert(type, message) {
+            if (type === 'success') {
+                notificationSystem.success('Success!', message);
+            } else {
+                notificationSystem.error('Error', message);
+            }
+        }
+
+        // Initialize quotes carousel
+        function initializeQuotesCarousel() {
+            const slides = document.querySelectorAll('.quote-slide');
+            let currentSlide = 0;
+
+            function showNextQuote() {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+
+            // Change quote every 4 seconds
+            setInterval(showNextQuote, 4000);
+        }
+
+        // Create floating hearts animation
+        function createFloatingHearts() {
+            const heroSection = document.querySelector('.hero');
+            if (!heroSection) return;
+
+            // Create floating hearts container
+            const heartsContainer = document.createElement('div');
+            heartsContainer.className = 'floating-hearts';
+            heroSection.appendChild(heartsContainer);
+
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                
+                heartsContainer.appendChild(heart);
+
+                // Remove heart after animation
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.parentNode.removeChild(heart);
+                    }
+                }, 10000);
+            }
+
+            // Create a heart every 3 seconds
+            setInterval(createHeart, 3000);
+            
+            // Create initial hearts
+            for (let i = 0; i < 3; i++) {
+                setTimeout(createHeart, i * 1000);
+            }
+        }
+
+        // Add inspiring messages to donation process
+        const inspiringMessages = [
+            "Your kindness creates ripples of hope! 🌊",
+            "Every donation is a seed of change! 🌱",
+            "You're making someone's dream come true! ✨",
+            "Your generosity lights up lives! 💡",
+            "Together, we're unstoppable! 🚀",
+            "Your heart is changing the world! 🌍",
+            "Compassion in action - that's you! 💪",
+            "You're a hero in someone's story! 🦸‍♀️"
+        ];
+
+        function getRandomInspiringMessage() {
+            return inspiringMessages[Math.floor(Math.random() * inspiringMessages.length)];
+        }
+
+        // Enhanced celebration with inspiring message
+        function createEnhancedCelebration() {
+            createCelebrationEffect();
+            
+            // Show inspiring message
+            setTimeout(() => {
+                notificationSystem.success(
+                    'Amazing!', 
+                    getRandomInspiringMessage()
+                );
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

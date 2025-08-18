@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Frontend Data</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .card { border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 8px; }
+        .stats { background: #f0f8ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Frontend Data Debug</h1>
+    
+    <div class="stats">
+        <h2>📊 Dashboard Stats</h2>
+        <div id="stats">Loading...</div>
+    </div>
+    
+    <div>
+        <h2>📋 Story Cards</h2>
+        <div id="posts">Loading...</div>
+    </div>
+    
+    <script>
+        async function debugData() {
+            try {
+                // Test stats
+                const statsResponse = await fetch('http://localhost:5000/api/stats');
+                const stats = await statsResponse.json();
+                
+                document.getElementById('stats').innerHTML = `
+                    <div class="success">✅ Stats API Working</div>
+                    <p><strong>Total Donations:</strong> ₹${stats.totalDonations}</p>
+                    <p><strong>Stories Shared:</strong> ${stats.totalPosts}</p>
+                    <p><strong>Collaborations:</strong> ${stats.totalCollaborations}</p>
+                `;
+                
+                // Test posts
+                const postsResponse = await fetch('http://localhost:5000/api/posts');
+                const posts = await postsResponse.json();
+                
+                let postsHtml = '<div class="success">✅ Posts API Working</div>';
+                posts.forEach(post => {
+                    postsHtml += `
+                        <div class="card">
+                            <h3>${post.title}</h3>
+                            <p><strong>💰 Amount Raised:</strong> ₹${post.donationAmount || 0}</p>
+                            <p><strong>👥 Donors:</strong> ${post.donations || 0}</p>
+                            <p><strong>📍 Location:</strong> ${post.location}</p>
+                            <p><strong>Status:</strong> ${post.status}</p>
+                        </div>
+                    `;
+                });
+                
+                document.getElementById('posts').innerHTML = postsHtml;
+                
+                // Check if data matches expectations
+                const raviPost = posts.find(p => p.title.includes('Ravi'));
+                if (raviPost && raviPost.donationAmount === 400 && raviPost.donations === 4) {
+                    document.body.insertAdjacentHTML('beforeend', 
+                        '<div class="success"><h2>🎉 SUCCESS: Ravi\'s card data is correct!</h2></div>'
+                    );
+                } else {
+                    document.body.insertAdjacentHTML('beforeend', 
+                        '<div class="error"><h2>❌ ERROR: Ravi\'s card data is incorrect</h2></div>'
+                    );
+                }
+                
+                if (stats.totalDonations === 100 && stats.totalPosts === 1 && stats.totalCollaborations === 1) {
+                    document.body.insertAdjacentHTML('beforeend', 
+                        '<div class="success"><h2>🎉 SUCCESS: Dashboard stats are correct!</h2></div>'
+                    );
+                } else {
+                    document.body.insertAdjacentHTML('beforeend', 
+                        '<div class="error"><h2>❌ ERROR: Dashboard stats are incorrect</h2></div>'
+                    );
+                }
+                
+            } catch (error) {
+                document.getElementById('stats').innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+                document.getElementById('posts').innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        debugData();
+        
+        // Auto-refresh every 5 seconds
+        setInterval(debugData, 5000);
+    </script>
+</body>
+</html>

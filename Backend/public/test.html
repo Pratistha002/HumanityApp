@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Test - Humanity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .test-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Humanity - JavaScript Test Page</h1>
+    
+    <div class="test-box">
+        <h2>JavaScript Status Check</h2>
+        <p id="jsStatus">Checking JavaScript...</p>
+        <button onclick="testFunction()">Test JavaScript Function</button>
+        <button onclick="testAnimation()">Test Animation</button>
+        <button onclick="testFetch()">Test API Connection</button>
+        <div id="result"></div>
+    </div>
+
+    <div class="test-box">
+        <h2>Quick Links</h2>
+        <a href="/interactive.html" style="color: #FFD700; text-decoration: none; font-size: 1.2rem;">
+            🌟 Go to Main Humanity Website
+        </a>
+    </div>
+
+    <script>
+        // Test JavaScript execution
+        document.getElementById('jsStatus').innerHTML = '✅ JavaScript is working!';
+        console.log('JavaScript loaded successfully');
+
+        function testFunction() {
+            document.getElementById('result').innerHTML = '✅ JavaScript functions are working!';
+            console.log('Test function executed');
+        }
+
+        function testAnimation() {
+            const result = document.getElementById('result');
+            result.style.transform = 'scale(1.1)';
+            result.style.transition = 'transform 0.3s ease';
+            result.innerHTML = '✅ Animations are working!';
+            
+            setTimeout(() => {
+                result.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        async function testFetch() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                document.getElementById('result').innerHTML = `✅ API Connection working!<br>
+                    Total Donations: ₹${data.totalDonations}<br>
+                    Total Stories: ${data.totalPosts}`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = '❌ API Connection failed: ' + error.message;
+            }
+        }
+
+        // Auto-test on load
+        setTimeout(() => {
+            console.log('Auto-testing API connection...');
+            testFetch();
+        }, 1000);
+    </script>
+</body>
+</html>
