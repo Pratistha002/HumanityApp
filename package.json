@@ -1,0 +1,47 @@
+{
+  "name": "humanity-donation-system",
+  "version": "1.0.0",
+  "description": "A comprehensive donation management platform with real-time updates and UPI integration",
+  "main": "Backend/server.js",
+  "scripts": {
+    "start": "npm run start:backend",
+    "start:backend": "cd Backend && npm start",
+    "start:frontend": "cd Frontend && npm start",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd Backend && npm run dev-server-only",
+    "dev:frontend": "cd Frontend && npm start",
+    "build": "cd Frontend && npm run build",
+    "install:all": "npm install && cd Backend && npm install && cd ../Frontend && npm install",
+    "clean": "rimraf Backend/node_modules Frontend/node_modules node_modules",
+    "test": "cd Backend && npm test && cd ../Frontend && npm test",
+    "lint": "cd Backend && npm run lint && cd ../Frontend && npm run lint"
+  },
+  "keywords": [
+    "donation",
+    "charity",
+    "react",
+    "nodejs",
+    "upi",
+    "real-time",
+    "excel",
+    "websocket"
+  ],
+  "author": "Pratistha Singh",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/humanity-donation-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/humanity-donation-system/issues"
+  },
+  "homepage": "https://github.com/yourusername/humanity-donation-system#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "rimraf": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  }
+}
