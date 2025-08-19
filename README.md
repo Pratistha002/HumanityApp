@@ -91,11 +91,28 @@ npm run build
 npm start
 ```
 
+### 🚀 Deployment
+
+#### Deploy to GitHub Pages
+```bash
+# Deploy frontend to GitHub Pages
+npm run deploy
+```
+
+#### Automatic Deployment
+The project includes GitHub Actions workflow that automatically deploys to GitHub Pages when you push to the main branch.
+
 ### 📱 Access URLs
+
+#### Local Development
 - **Frontend Application**: http://localhost:3000
 - **Backend API**: http://localhost:5000
 - **Admin Dashboard**: http://localhost:5000/admin
 - **Interactive Demo**: http://localhost:5000
+
+#### Live Demo (GitHub Pages)
+- **Live Application**: https://Pratistha002.github.io/HumanityApp
+- **Demo Mode**: Fully functional with demo data (no backend required)
 
 ## 🏗️ Project Structure
 

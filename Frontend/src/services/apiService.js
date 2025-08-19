@@ -1,5 +1,7 @@
 import axios from 'axios';
 import API_CONFIG, { getApiUrl } from '../config/api';
+import demoService from './demoService';
+import { isDemo } from '../data/demoData';
 
 // Create axios instance with default configuration
 const apiClient = axios.create({
@@ -45,12 +47,31 @@ apiClient.interceptors.response.use(
   }
 );
 
+// Helper function to handle API calls with demo fallback
+const handleApiCall = async (apiCall, demoCall) => {
+  if (isDemo) {
+    return await demoCall();
+  }
+  
+  try {
+    return await apiCall();
+  } catch (error) {
+    console.warn('API call failed, falling back to demo data:', error.message);
+    return await demoCall();
+  }
+};
+
 // API Service functions
 const apiService = {
   // Posts/Stories
   async getPosts() {
-    const response = await apiClient.get(getApiUrl(API_CONFIG.ENDPOINTS.POSTS));
-    return response.data;
+    return handleApiCall(
+      async () => {
+        const response = await apiClient.get(getApiUrl(API_CONFIG.ENDPOINTS.POSTS));
+        return response.data;
+      },
+      () => demoService.getPosts()
+    );
   },
 
   async createPost(formData) {
@@ -69,18 +90,33 @@ const apiService = {
 
   // Donations
   async makeDonation(postId, donationData) {
-    const response = await apiClient.post(getApiUrl(API_CONFIG.ENDPOINTS.DONATE(postId)), donationData);
-    return response.data;
+    return handleApiCall(
+      async () => {
+        const response = await apiClient.post(getApiUrl(API_CONFIG.ENDPOINTS.DONATE(postId)), donationData);
+        return response.data;
+      },
+      () => demoService.donate(postId, donationData)
+    );
   },
 
   async getStats() {
-    const response = await apiClient.get(getApiUrl(API_CONFIG.ENDPOINTS.STATS));
-    return response.data;
+    return handleApiCall(
+      async () => {
+        const response = await apiClient.get(getApiUrl(API_CONFIG.ENDPOINTS.STATS));
+        return response.data;
+      },
+      () => demoService.getStats()
+    );
   },
 
   async getPaymentConfig() {
-    const response = await apiClient.get(getApiUrl(API_CONFIG.ENDPOINTS.PAYMENT_CONFIG));
-    return response.data;
+    return handleApiCall(
+      async () => {
+        const response = await apiClient.get(getApiUrl(API_CONFIG.ENDPOINTS.PAYMENT_CONFIG));
+        return response.data;
+      },
+      () => demoService.getPaymentConfig()
+    );
   },
 
   // Collaborations
